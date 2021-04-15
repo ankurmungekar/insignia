@@ -22,6 +22,7 @@ import { Router, Route, Switch, Redirect } from "react-router-dom";
 
 // core components
 import Admin from "layouts/Admin.js";
+import Project from "layouts/Project.js";
 import RTL from "layouts/RTL.js";
 
 import "assets/css/material-dashboard-react.css?v=1.9.0";
@@ -32,6 +33,10 @@ ReactDOM.render(
   <Router history={hist}>
     <Switch>
       <Route path="/admin" component={Admin} />
+      <Route path="/project/:name/leaderboard" component={Project} />
+      <Route path="/project/:name/rewards" component={Project} />
+      <Route path="/project/:name/badges" component={Project} />
+      <Route path="/project/:name/actions" component={Project} />
       <Route path="/rtl" component={RTL} />
       <Redirect from="/" to="/admin/dashboard" />
     </Switch>

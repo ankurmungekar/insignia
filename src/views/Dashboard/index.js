@@ -8,6 +8,7 @@ import Table from "components/Table/Table.js";
 import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
+import Button from "components/CustomButtons/Button.js";
 
 const styles = {
   cardCategoryWhite: {
@@ -44,24 +45,29 @@ const useStyles = makeStyles(styles);
 export default function TableList() {
   const classes = useStyles();
   return (
-    <GridContainer>
-      <GridItem xs={12} sm={12} md={12}>
-        <Card>
-          <CardHeader color="primary">
-            <h4 className={classes.cardTitleWhite}>Loyalty Program</h4>
-          </CardHeader>
-          <CardBody>
-            <Table
-              tableHeaderColor="primary"
-              tableHead={["Project Name", "Total User", "Badges"]}
-              tableData={[
-                ["Bluehost Maestro", "55", "200"],
-                ["Hostgator", "19", "160"]
-              ]}
-            />
-          </CardBody>
-        </Card>
-      </GridItem>
-    </GridContainer>
+    <div>
+      <div style={{ float: 'right' }}><Button color="primary">Add new Campaign</Button></div>
+      <div style={{ clear: 'both' }}>
+        <GridContainer>
+          <GridItem xs={12} sm={12} md={12}>
+            <Card>
+              <CardHeader color="primary">
+                <h4 className={classes.cardTitleWhite}>Loyalty Program</h4>
+              </CardHeader>
+              <CardBody>
+                <Table
+                  tableHeaderColor="primary"
+                  tableHead={["Project Name", "Badges", "Total User", "Tier"]}
+                  tableData={[
+                    ["Bluehost Maestro", "200", "78", "1"],
+                    ["Hostgator", "160", "56", "2"]
+                  ]}
+                />
+              </CardBody>
+            </Card>
+          </GridItem>
+        </GridContainer>
+      </div>
+    </div>
   );
 }
