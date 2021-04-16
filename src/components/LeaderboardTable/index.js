@@ -11,8 +11,8 @@ import { useHistory } from "react-router-dom";
 
 const styles = {
     container: {
-        paddingLeft: '100px',
-        paddingRight: '100px'
+        paddingLeft: '50px',
+        paddingRight: '50px'
     }
 };
 
@@ -23,17 +23,14 @@ export default function CustomTable(props) {
     const { tableData } = props;
     let rank = 1;
     return (
-        <div className={classes.container}>
-            <h1 className={classes.header}>Leaderboard</h1>
-            <Table className={classes.table}>
-                <TableBody>
-                    {tableData.map((item, key) => {
-                        return (
-                            <Row rowData={item} rank={rank++} key={key} />
-                        );
-                    })}
-                </TableBody>
-            </Table>
-        </div>
+        <Table className={classes.table}>
+            <TableBody>
+                {tableData.map((item, key) => {
+                    return (
+                        <Row rowData={item} rank={rank++} key={key} />
+                    );
+                })}
+            </TableBody>
+        </Table>
     );
 }

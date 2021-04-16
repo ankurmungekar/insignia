@@ -62,8 +62,6 @@ const styles = {
 };
 
 const useStyles = makeStyles(styles);
-
-
 const Row = (props) => {
     const { rowData } = props
     const classes = useStyles();
@@ -82,11 +80,18 @@ const Row = (props) => {
         <div className={classes.row + ' ' + rowClasses()} >
             <div className={classes.rank}>{props.rank}</div>
             <div className={classes.main}>
-                <div className={classes.name}>{rowData.name}</div>
-                <div className={classes.points}>{rowData.points} points</div>
+                <div className={classes.name}>{rowData.firstName} {rowData.lastName}</div>
+                <div className={classes.points}>{rowData.country}</div>
             </div>
-            <div className={classes.level}>Level {rowData.level}</div>
-            <div className={classes.badges}>{rowData.badge}</div>
+            <div className={classes.level}>
+                <div>Points</div>
+                {rowData.totalPoints}
+            </div>
+            <div className={classes.badges}>
+                <div>Badges</div>
+                {/* {rowData.badges} */}
+                30
+            </div>
         </div>
     );
 }

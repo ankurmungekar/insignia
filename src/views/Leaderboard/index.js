@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from '../../axios.js';
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 // core components
@@ -9,6 +10,7 @@ import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
 import Leaderboard from "components/LeaderboardTable";
+import Spinner from '../../assets/img/fidget-spinner.gif';
 
 const styles = {
   cardCategoryWhite: {
@@ -37,12 +39,19 @@ const styles = {
       fontWeight: "400",
       lineHeight: "1"
     }
+  },
+  container: {
+    paddingLeft: '50px',
+    paddingRight: '50px',
+  },
+  header: {
+    padding: '0 15px'
   }
 };
 
 const useStyles = makeStyles(styles);
 
-export default function TableList() {
+export default function TableList(props) {
   const classes = useStyles();
   const tableData = [
     { name: "Thomas Crane", level: "9", points: "1200", badge: "43" },
@@ -53,13 +62,35 @@ export default function TableList() {
     { name: "Bradyn Kramer", level: "4", points: "650", badge: "13" },
     { name: "Alvaro Mcgee", level: "1", points: "200", badge: "5" }
   ]
+  const [loading, setLoading] = useState(true);
+  const [leaderList, setLeaderList] = useState([]);
+  const partnerId = props.match.params.id;
+  useEffect(() => {
+    axios.get(`/partner/${partnerId}/leaderboard`)
+      .then(function (response) {
+        setLeaderList(response.data.usersList);
+        setLoading(false);
+      })
+      .catch(error => {
+        console.log(error);
+      })
+    // eslint-disable-next-line
+  }, []);
   return (
-    <GridContainer>
+    <div className={classes.container}>
+      <h1 className={classes.header}>Leaderboard</h1>
       <GridItem xs={12} sm={12} md={12}>
-        <Leaderboard
-          tableData={tableData}
-        />
+        {loading && (
+          <div style={{ padding: '100px', textAlign: 'center' }}><img src={Spinner} /></div>
+        )}
+        {!loading && leaderList.length > 0 && (
+          <Leaderboard
+            tableData={leaderList}
+          />)}
+        {!loading && (leaderList.length === 0) && (
+          <div style={{ padding: '100px', textAlign: 'center' }}>No data found</div>
+        )}
       </GridItem>
-    </GridContainer>
+    </div>
   );
 }
