@@ -17,12 +17,6 @@ export default function CustomTable(props) {
   const classes = useStyles();
   const { tableHead, tableData, tableHeaderColor, isDashboard } = props;
   let history = useHistory();
-  function TableRowHandler(id) {
-    if (isDashboard) {
-      history.push(`/project/${id}/leaderboard`);
-      window.localStorage.setItem('selectedProgram', id);
-    }
-  }
   return (
     <div className={classes.tableResponsive}>
       <Table className={classes.table}>
@@ -45,26 +39,22 @@ export default function CustomTable(props) {
         <TableBody>
           {tableData.map((item, key) => {
             return (
-              <TableRow key={key} className={classes.tableBodyRow} onClick={(key) => TableRowHandler(item.id)} style={{ cursor: 'pointer' }}>
-                {item.brand && (
+              <TableRow key={key} className={classes.tableBodyRow}>
+                {item.description && (
                   <TableCell className={classes.tableCell}>
-                    {item.brand}
+                    {item.description}
                   </TableCell>
                 )}
-                {item.platform && (
+                {item.point && (
                   <TableCell className={classes.tableCell}>
-                    {item.platform}
+                    {item.point}
                   </TableCell>
                 )}
-                <TableCell className={classes.tableCell}>
-                  0
-                </TableCell>
-                <TableCell className={classes.tableCell}>
-                  0
-                </TableCell>
-                <TableCell className={classes.tableCell}>
-                  0
-                </TableCell>
+                {item.actionTag && (
+                  <TableCell className={classes.tableCell}>
+                    {item.actionTag}
+                  </TableCell>
+                )}
               </TableRow>
             );
           })}

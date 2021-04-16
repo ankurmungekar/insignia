@@ -70,8 +70,7 @@ const tableStyle = theme => ({
     color: "inherit",
     display: "table-row",
     outline: "none",
-    verticalAlign: "middle",
-    cursor: "pointer"
+    verticalAlign: "middle"
   }
 });
 

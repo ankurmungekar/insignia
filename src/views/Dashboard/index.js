@@ -17,6 +17,7 @@ import Button from "components/CustomButtons/Button.js";
 import CustomInput from "components/CustomInput/CustomInput.js";
 import { Formik } from 'formik';
 import * as Yup from 'yup';
+import Spinner from '../../assets/img/fidget-spinner.gif';
 
 const styles = {
   cardCategoryWhite: {
@@ -53,7 +54,8 @@ const useStyles = makeStyles(styles);
 export default function TableList() {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
-  const [actionList, setActionList] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [programList, setProgramList] = useState([]);
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -64,8 +66,8 @@ export default function TableList() {
     const params = values;
     axios.post('/program', params)
       .then(response => {
-        const tempActionList = [...actionList, values]; // new array need to update
-        setActionList(tempActionList); // update the state
+        const tempProgramList = [...programList, values]; // new array need to update
+        setProgramList(tempProgramList); // update the state
         setOpen(false);
       })
       .catch(error => {
@@ -84,10 +86,14 @@ export default function TableList() {
   });
 
   useEffect(() => {
-    axios.get('/programs', {
-    }).then(function (response) {
-      setActionList(response.data); // update the state
-    });
+    axios.get('/programs')
+      .then(function (response) {
+        setProgramList(response.data);
+        setLoading(false);
+      })
+      .catch(error => {
+        console.log(error);
+      })
     // eslint-disable-next-line
   }, []);
   return (
@@ -101,12 +107,15 @@ export default function TableList() {
                 <h4 className={classes.cardTitleWhite}>Loyalty Program</h4>
               </CardHeader>
               <CardBody>
-                <ProgramList
+                {loading && (
+                  <div style={{ padding: '100px', textAlign: 'center' }}><img src={Spinner} /></div>
+                )}
+                {!loading && (<ProgramList
                   tableHeaderColor="primary"
                   tableHead={["Brand", "Platform", "Badges", "Levels", "Users"]}
-                  tableData={actionList}
+                  tableData={programList}
                   isDashboard={true}
-                />
+                />)}
               </CardBody>
             </Card>
           </GridItem>
