@@ -9,13 +9,14 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 // core components
 import GridItem from "components/Grid/GridItem.js";
 import GridContainer from "components/Grid/GridContainer.js";
-import Table from "components/Table/Table.js";
+import ProgramList from "components/ProgramList/";
 import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
 import Button from "components/CustomButtons/Button.js";
 import CustomInput from "components/CustomInput/CustomInput.js";
 import { Formik } from 'formik';
+import * as Yup from 'yup';
 
 const styles = {
   cardCategoryWhite: {
@@ -48,42 +49,50 @@ const styles = {
 };
 
 const useStyles = makeStyles(styles);
-const tableData = [
-  { name: "Bluehost Maestro", badges: "200", users: "78", tier: "1" },
-  { name: "Hostgator", badges: "160", users: "67", tier: "2" },
-  { name: "Bigrock", badges: "90", users: "55", tier: "2" },
-]
 
 export default function TableList() {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
-  const [actionList, setActionList] = useState(tableData);
+  const [actionList, setActionList] = useState([]);
   const handleClickOpen = () => {
     setOpen(true);
   };
   const handleClose = () => {
     setOpen(false);
   };
-  const handleSubmit = (values) => {
-    const tempActionList = [...actionList, values]; // new array need to update
-    setActionList(tempActionList); // update the state
-    setOpen(false);
+  const addNewProgram = (values) => {
+    const params = values;
+    axios.post('/program', params)
+      .then(response => {
+        const tempActionList = [...actionList, values]; // new array need to update
+        setActionList(tempActionList); // update the state
+        setOpen(false);
+      })
+      .catch(error => {
+        console.log(error);
+      })
   };
-
-  const getProgramList = () => {
-    axios.get('/program', {
-    }).then(function (response) {
-      console.log(response);
-    })
+  const initialValues = {
+    brand: '',
+    partnerName: '',
+    platform: '',
   }
+  const ProgramFormSchema = Yup.object().shape({
+    brand: Yup.string().required('Required'),
+    partnerName: Yup.string().required('Required'),
+    platform: Yup.string().required('Required'),
+  });
 
   useEffect(() => {
-    getProgramList();
+    axios.get('/programs', {
+    }).then(function (response) {
+      setActionList(response.data); // update the state
+    });
     // eslint-disable-next-line
-  }, [getProgramList]);
+  }, []);
   return (
     <div>
-      <div style={{ float: 'right' }}><Button color="primary" onClick={handleClickOpen}>Add new Campaign</Button></div>
+      <div style={{ float: 'right' }}><Button color="primary" onClick={handleClickOpen}>Add new Program</Button></div>
       <div style={{ clear: 'both' }}>
         <GridContainer>
           <GridItem xs={12} sm={12} md={12}>
@@ -92,10 +101,10 @@ export default function TableList() {
                 <h4 className={classes.cardTitleWhite}>Loyalty Program</h4>
               </CardHeader>
               <CardBody>
-                <Table
+                <ProgramList
                   tableHeaderColor="primary"
-                  tableHead={["Project Name", "Badges", "Total User", "Tier"]}
-                  tableData={tableData}
+                  tableHead={["Brand", "Platform", "Badges", "Levels", "Users"]}
+                  tableData={actionList}
                   isDashboard={true}
                 />
               </CardBody>
@@ -105,49 +114,56 @@ export default function TableList() {
       </div>
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <div style={{ padding: '30px' }}>
-          <DialogTitle id="form-dialog-title">Add Action</DialogTitle>
+          <DialogTitle id="form-dialog-title">Add Program</DialogTitle>
           <DialogContent>
             <DialogContentText>
               To subscribe to this website, please enter your email address here. We will send updates
               occasionally.
             </DialogContentText>
             <Formik
-              initialValues={{
-                title: '',
-                points: '',
-                tag: '',
-              }}>
+              initialValues={initialValues}
+              validationSchema={ProgramFormSchema}
+              isInitialValid={ProgramFormSchema.isValidSync(initialValues)}>
               {formData => (
                 <div>
                   <CustomInput
-                    labelText="Title"
-                    id="title"
-                    name="title"
+                    labelText="Brand Name"
+                    id="brand"
+                    name="brand"
                     formControlProps={{
                       fullWidth: true
                     }}
                     handleChange={formData.handleChange}
                   />
+                  {formData.errors.brand && formData.touched.brand ? (
+                    <div>{formData.errors.brand}</div>
+                  ) : null}
                   <CustomInput
-                    labelText="Points"
-                    id="points"
-                    name="points"
+                    labelText="Partner Name"
+                    id="partnerName"
+                    name="partnerName"
                     formControlProps={{
                       fullWidth: true
                     }}
                     handleChange={formData.handleChange}
                   />
+                  {formData.errors.partnerName && formData.touched.partnerName ? (
+                    <div>{formData.errors.partnerName}</div>
+                  ) : null}
                   <CustomInput
-                    labelText="Tag"
-                    id="tag"
-                    name="tag"
+                    labelText="Platform"
+                    id="platform"
+                    name="platform"
                     formControlProps={{
                       fullWidth: true
                     }}
                     handleChange={formData.handleChange}
                   />
+                  {formData.errors.platform && formData.touched.platform ? (
+                    <div>{formData.errors.platform}</div>
+                  ) : null}
                   <div style={{ marginTop: '20px' }}>
-                    <Button color="primary" onClick={() => handleSubmit(formData.values)}>Add</Button>
+                    <Button color="primary" disabled={!formData.isValid} onClick={() => addNewProgram(formData.values)}>Add</Button> &nbsp;
                     <Button onClick={handleClose} color="primary">Cancel</Button>
                   </div>
                 </div>
@@ -156,6 +172,6 @@ export default function TableList() {
           </DialogContent>
         </div>
       </Dialog>
-    </div>
+    </div >
   );
 }

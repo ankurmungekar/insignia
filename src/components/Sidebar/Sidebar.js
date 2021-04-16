@@ -16,6 +16,7 @@ import AdminNavbarLinks from "components/Navbars/AdminNavbarLinks.js";
 import RTLNavbarLinks from "components/Navbars/RTLNavbarLinks.js";
 
 import styles from "assets/jss/material-dashboard-react/components/sidebarStyle.js";
+import logoImg from '../../assets/img/logolight.png'
 
 const useStyles = makeStyles(styles);
 
@@ -38,15 +39,17 @@ export default function Sidebar(props) {
           });
         } else {
           listItemClasses = classNames({
-            [" " + classes[color]]: activeRoute(prop.layout + prop.path)
+            [" " + classes[color]]: activeRoute(prop.path)
           });
         }
         const whiteFontClasses = classNames({
-          [" " + classes.whiteFont]: activeRoute(prop.layout + prop.path)
+          [" " + classes.whiteFont]: activeRoute(prop.path)
         });
+
+        let id = window.localStorage.getItem('selectedProgram');
         return (
           <NavLink
-            to={prop.layout + prop.path}
+            to={prop.layout + '/' + id + prop.path}
             className={activePro + classes.item}
             activeClassName="active"
             key={key}
@@ -88,10 +91,9 @@ export default function Sidebar(props) {
           [classes.logoLinkRTL]: props.rtlActive
         })}
       >
-        <div className={classes.logoImage}>
-          <img src={logo} alt="logo" className={classes.img} />
+        <div style={{ marginTop: '-45px', textAlign: 'center' }}>
+          <img src={logoImg} alt="logo" className={classes.img} style={{ position: 'relative', width: '95px' }} />
         </div>
-        {logoText}
       </a>
     </div>
   );

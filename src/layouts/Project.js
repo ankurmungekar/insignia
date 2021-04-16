@@ -19,14 +19,13 @@ import bgImage from "assets/img/sidebar-2.jpg";
 import logo from "assets/img/reactlogo.png";
 
 let ps;
-
 const switchRoutes = (
   <Switch>
     {routes.map((prop, key) => {
       if (prop.layout === "/project") {
         return (
           <Route
-            path={prop.layout + prop.path}
+            path={prop.layout + '/:id' + prop.path}
             component={prop.component}
             key={key}
           />
@@ -41,28 +40,11 @@ const switchRoutes = (
 const useStyles = makeStyles(styles);
 
 export default function Admin({ ...rest }) {
-  // styles
   const classes = useStyles();
-  // ref to help us initialize PerfectScrollbar on windows devices
   const mainPanel = React.createRef();
-  // states and functions
   const [image, setImage] = React.useState(bgImage);
   const [color, setColor] = React.useState("blue");
-  // const [fixedClasses, setFixedClasses] = React.useState("dropdown show");
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  // const handleImageClick = image => {
-  //   setImage(image);
-  // };
-  // const handleColorClick = color => {
-  //   setColor(color);
-  // };
-  // const handleFixedClick = () => {
-  //   if (fixedClasses === "dropdown") {
-  //     setFixedClasses("dropdown show");
-  //   } else {
-  //     setFixedClasses("dropdown");
-  //   }
-  // };
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };

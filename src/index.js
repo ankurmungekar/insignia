@@ -33,11 +33,11 @@ ReactDOM.render(
   <Router history={hist}>
     <Switch>
       <Route path="/admin" component={Admin} />
-      <Route path="/project/:name/leaderboard" component={Project} />
-      <Route path="/project/:name/actions" component={Project} />
-      <Route path="/project/:name/rewards" component={Project} />
-      <Route path="/project/:name/badges" component={Project} />
-      <Route path="/project/:name/actions" component={Project} />
+      <Route path="/project/:id/leaderboard" component={Project} />
+      <Route path="/project/:id/actions" component={Project} />
+      <Route path="/project/:id/rewards" component={Project} />
+      <Route path="/project/:id/badges" component={Project} />
+      <Route path="/project/:id/actions" component={Project} />
       <Route path="/rtl" component={RTL} />
       <Redirect from="/" to="/admin/dashboard" />
     </Switch>
