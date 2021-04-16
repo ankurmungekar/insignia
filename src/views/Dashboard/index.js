@@ -64,8 +64,6 @@ export default function TableList() {
     setOpen(false);
   };
   const handleSubmit = (values) => {
-    tableData.push(values);
-    console.log(values);
     const tempActionList = [...actionList, values]; // new array need to update
     setActionList(tempActionList); // update the state
     setOpen(false);
