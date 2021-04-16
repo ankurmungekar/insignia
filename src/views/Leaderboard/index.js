@@ -8,6 +8,7 @@ import Table from "components/Table/Table.js";
 import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
+import Leaderboard from "components/LeaderboardTable";
 
 const styles = {
   cardCategoryWhite: {
@@ -55,18 +56,9 @@ export default function TableList() {
   return (
     <GridContainer>
       <GridItem xs={12} sm={12} md={12}>
-        <Card>
-          <CardHeader color="primary">
-            <h4 className={classes.cardTitleWhite}>Leaderboard</h4>
-          </CardHeader>
-          <CardBody>
-            <Table
-              tableHeaderColor="primary"
-              tableHead={["Username", "Level", "Points", "Badges"]}
-              tableData={tableData}
-            />
-          </CardBody>
-        </Card>
+        <Leaderboard
+          tableData={tableData}
+        />
       </GridItem>
     </GridContainer>
   );
