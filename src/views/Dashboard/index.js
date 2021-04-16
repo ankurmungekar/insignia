@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from '../../axios.js';
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import Dialog from '@material-ui/core/Dialog';
@@ -68,6 +69,18 @@ export default function TableList() {
     setActionList(tempActionList); // update the state
     setOpen(false);
   };
+
+  const getProgramList = () => {
+    axios.get('/program', {
+    }).then(function (response) {
+      console.log(response);
+    })
+  }
+
+  useEffect(() => {
+    getProgramList();
+    // eslint-disable-next-line
+  }, [getProgramList]);
   return (
     <div>
       <div style={{ float: 'right' }}><Button color="primary" onClick={handleClickOpen}>Add new Campaign</Button></div>
