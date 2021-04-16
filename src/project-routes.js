@@ -17,11 +17,13 @@
 */
 // @material-ui/icons
 import Person from "@material-ui/icons/Person";
-import LibraryBooks from "@material-ui/icons/LibraryBooks";
-import Notifications from "@material-ui/icons/Notifications";
+import LoyaltyIcon from '@material-ui/icons/Loyalty';
+import AssignmentIcon from '@material-ui/icons/Assignment';
+import CardGiftcardIcon from '@material-ui/icons/CardGiftcard';
+
 import Leaderboard from "views/Leaderboard/";
 import Actions from "views/Actions/";
-import Rewards from "views/UserProfile/UserProfile.js";
+import Rewards from "views/Rewards/";
 import Badges from "views/Badges";
 
 const dashboardRoutes = [
@@ -35,21 +37,21 @@ const dashboardRoutes = [
   {
     path: `/actions`,
     name: "Actions",
-    icon: Person,
+    icon: AssignmentIcon,
     component: Actions,
     layout: "/project"
   },
   {
     path: `/badges`,
     name: "Badges",
-    icon: LibraryBooks,
+    icon: LoyaltyIcon,
     component: Badges,
     layout: "/project"
   },
   {
     path: `/rewards`,
     name: "Rewards",
-    icon: Notifications,
+    icon: CardGiftcardIcon,
     component: Rewards,
     layout: "/project"
   }
