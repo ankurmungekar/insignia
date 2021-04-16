@@ -48,9 +48,12 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 const tableData = [
-  { name: "Bluehost Maestro", badges: "200", users: "78", tier: "1" },
-  { name: "Hostgator", badges: "160", users: "67", tier: "2" },
-  { name: "Bigrock", badges: "90", users: "55", tier: "2" },
+  { title: "Every site added", points: "10", action_tag: "WEBSITE_ADD" },
+  { title: "Every client added", points: "5", action_tag: "CLIENT_ADD" },
+  { title: "Review on Social Media", points: "20", action_tag: "CLIENT_ADD" },
+  { title: "Every purchase through Maestro", points: "10", action_tag: "CLIENT_ADD" },
+  { title: "Follow social handles (Fb, Insta, Twitter)", points: "5", action_tag: "CLIENT_ADD" },
+  { title: "Attend a webinar", points: "5", action_tag: "CLIENT_ADD" }
 ]
 
 export default function TableList() {
@@ -64,28 +67,25 @@ export default function TableList() {
     setOpen(false);
   };
   const handleSubmit = (values) => {
-    tableData.push(values);
-    console.log(values);
     const tempActionList = [...actionList, values]; // new array need to update
     setActionList(tempActionList); // update the state
     setOpen(false);
   };
   return (
     <div>
-      <div style={{ float: 'right' }}><Button color="primary" onClick={handleClickOpen}>Add new Campaign</Button></div>
+      <div style={{ float: 'right' }}><Button color="primary" onClick={handleClickOpen}>Add new Action</Button></div>
       <div style={{ clear: 'both' }}>
         <GridContainer>
           <GridItem xs={12} sm={12} md={12}>
             <Card>
               <CardHeader color="primary">
-                <h4 className={classes.cardTitleWhite}>Loyalty Program</h4>
+                <h4 className={classes.cardTitleWhite}>Actions</h4>
               </CardHeader>
               <CardBody>
                 <Table
                   tableHeaderColor="primary"
-                  tableHead={["Project Name", "Badges", "Total User", "Tier"]}
-                  tableData={tableData}
-                  isDashboard={true}
+                  tableHead={["Specific Actions", "Points", "Tag"]}
+                  tableData={actionList}
                 />
               </CardBody>
             </Card>

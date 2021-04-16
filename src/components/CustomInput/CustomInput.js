@@ -23,7 +23,8 @@ export default function CustomInput(props) {
     labelProps,
     inputProps,
     error,
-    success
+    success,
+    handleChange
   } = props;
 
   const labelClasses = classNames({
@@ -38,6 +39,9 @@ export default function CustomInput(props) {
   const marginTop = classNames({
     [classes.marginTop]: labelText === undefined
   });
+  const handleInputChange = (e) => {
+    handleChange(e)
+  }
   return (
     <FormControl
       {...formControlProps}
@@ -60,6 +64,7 @@ export default function CustomInput(props) {
         }}
         id={id}
         {...inputProps}
+        onChange={handleInputChange}
       />
       {error ? (
         <Clear className={classes.feedback + " " + classes.labelRootError} />

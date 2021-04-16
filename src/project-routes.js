@@ -26,9 +26,10 @@ import Notifications from "@material-ui/icons/Notifications";
 // import Language from "@material-ui/icons/Language";
 // core components/views for Admin layout
 //import DashboardPage from "views/Dashboard/";
-import Leaderboard from "views/TableList/TableList.js";
+import Leaderboard from "views/Leaderboard/";
+import Actions from "views/Actions/";
 import Rewards from "views/UserProfile/UserProfile.js";
-import Badges from "views/Icons/Icons.js";
+import Badges from "views/Badges";
 
 const dashboardRoutes = [
   // {
@@ -55,10 +56,10 @@ const dashboardRoutes = [
     layout: "/project"
   },
   {
-    path: "/maestro-bluehost/rewards",
-    name: "Rewards",
-    icon: Notifications,
-    component: Rewards,
+    path: "/maestro-bluehost/actions",
+    name: "Actions",
+    icon: Person,
+    component: Actions,
     layout: "/project"
   },
   {
@@ -66,6 +67,13 @@ const dashboardRoutes = [
     name: "Badges",
     icon: LibraryBooks,
     component: Badges,
+    layout: "/project"
+  },
+  {
+    path: "/maestro-bluehost/rewards",
+    name: "Rewards",
+    icon: Notifications,
+    component: Rewards,
     layout: "/project"
   }
 ];

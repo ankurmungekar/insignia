@@ -15,10 +15,12 @@ const useStyles = makeStyles(styles);
 
 export default function CustomTable(props) {
   const classes = useStyles();
-  const { tableHead, tableData, tableHeaderColor } = props;
+  const { tableHead, tableData, tableHeaderColor, isDashboard } = props;
   let history = useHistory();
   function TableRowHandler(key) {
-    history.push('/project/maestro-bluehost/leaderboard');
+    if (isDashboard) {
+      history.push('/project/maestro-bluehost/leaderboard');
+    }
   }
   return (
     <div className={classes.tableResponsive}>
@@ -40,13 +42,13 @@ export default function CustomTable(props) {
           </TableHead>
         ) : null}
         <TableBody>
-          {tableData.map((prop, key) => {
+          {tableData.map((item, key) => {
             return (
               <TableRow key={key} className={classes.tableBodyRow} onClick={(key) => TableRowHandler(key)}>
-                {prop.map((prop, key) => {
+                {Object.entries(item).map(([itemKey, value]) => {
                   return (
-                    <TableCell className={classes.tableCell} key={key}>
-                      {prop}
+                    <TableCell className={classes.tableCell} key={itemKey + 'col'}>
+                      {value}
                     </TableCell>
                   );
                 })}

@@ -34,6 +34,7 @@ ReactDOM.render(
     <Switch>
       <Route path="/admin" component={Admin} />
       <Route path="/project/:name/leaderboard" component={Project} />
+      <Route path="/project/:name/actions" component={Project} />
       <Route path="/project/:name/rewards" component={Project} />
       <Route path="/project/:name/badges" component={Project} />
       <Route path="/project/:name/actions" component={Project} />
