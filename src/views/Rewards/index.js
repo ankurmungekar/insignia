@@ -6,17 +6,23 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import Icon from "@material-ui/core/Icon";
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
 // core components
 import GridItem from "components/Grid/GridItem.js";
 import GridContainer from "components/Grid/GridContainer.js";
-import RewardList from "components/RewardList";
+import Danger from "components/Typography/Danger.js";
 import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
-import CardBody from "components/Card/CardBody.js";
+import CardIcon from "components/Card/CardIcon.js";
+import CardFooter from "components/Card/CardFooter.js";
 import Button from "components/CustomButtons/Button.js";
 import CustomInput from "components/CustomInput/CustomInput.js";
 import { Formik } from 'formik';
-import * as Yup from 'yup';
 import Spinner from '../../assets/img/fidget-spinner.gif';
 
 const styles = {
@@ -50,7 +56,8 @@ const styles = {
 };
 
 const useStyles = makeStyles(styles);
-export default function Rewards(props) {
+
+export default function TableList(props) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -62,31 +69,20 @@ export default function Rewards(props) {
   const handleClose = () => {
     setOpen(false);
   };
-  const addNewAction = (values) => {
+  const handleSubmit = (values) => {
     const params = { ...values, partnerId: partnerId };
-    axios.post('/action', params)
+    axios.post('/badge', params)
       .then(response => {
-        const tempRewardList = [...rewardList, values];
-        setRewardList(tempRewardList);
+        // const tempActionList = [...actionList, values]; // new array need to update
+        // setActionList(tempActionList); // update the state
         setOpen(false);
       })
       .catch(error => {
         console.log(error);
       })
   };
-  const initialValues = {
-    description: '',
-    point: '',
-    actionTag: '',
-  }
-  const ActionFormSchema = Yup.object().shape({
-    description: Yup.string().required('Required'),
-    point: Yup.number().required('Required'),
-    actionTag: Yup.string().required('Required'),
-  });
-
   useEffect(() => {
-    axios.get(`/partner/${partnerId}/rewards`)
+    axios.get(`/partners/${partnerId}/campaigns`)
       .then(function (response) {
         setRewardList(response.data);
         setLoading(false);
@@ -99,29 +95,42 @@ export default function Rewards(props) {
   }, []);
   return (
     <div>
-      <div style={{ float: 'right' }}><Button color="primary" onClick={handleClickOpen}>Add New Campaign</Button></div>
+      <div style={{ float: 'right', marginBottom: '30px' }}><Button color="primary" onClick={handleClickOpen}>Create new Badge</Button></div>
       <div style={{ clear: 'both' }}>
         <GridContainer>
-          <GridItem xs={12} sm={12} md={12}>
-            <Card>
-              <CardHeader color="primary">
-                <h4 className={classes.cardTitleWhite}>Campaigns</h4>
-              </CardHeader>
-              <CardBody>
-                {loading && (
-                  <div style={{ padding: '100px', textAlign: 'center' }}><img src={Spinner} /></div>
-                )}
-                {!loading && rewardList.length > 0 && (<RewardList
-                  tableHeaderColor="primary"
-                  tableHead={["Specific Campaigns", "Points", "Tag"]}
-                  tableData={rewardList}
-                />)}
-                {!loading && (rewardList.length === 0) && (
-                  <div style={{ padding: '100px', textAlign: 'center' }}>No campaigns found, please add a campaign</div>
-                )}
-              </CardBody>
-            </Card>
-          </GridItem>
+          {loading && (
+            <div style={{ padding: '100px', textAlign: 'center' }}><img src={Spinner} /></div>
+          )}
+          {!loading && rewardList.map((item, key) => {
+            return (
+              <GridItem xs={12} sm={6} md={4} key={key}>
+                <Card style={{ marginTop: '0' }}>
+                  <div style={{ padding: '40px 30px' }}>
+                    <div>
+                      <div style={{ borderRadius: '100%', float: 'left', paddingTop: '20px' }}>
+                        {item.name}
+                      </div>
+                      <Button style={{ float: 'right' }}> {item.status} </Button>
+                    </div>
+                    <div style={{ clear: 'both' }}>
+                      <p>{item.description}</p>
+                      <p style={{ margin: '0' }}>
+                        Top winners will get
+                      </p>
+                      <ol style={{ margin: '0' }}>
+                        <li>Amazon voucher</li>
+                        <li>Amazon voucher</li>
+                        <li>Amazon voucher</li>
+                      </ol>
+                    </div>
+                  </div>
+                </Card>
+              </GridItem>
+            )
+          })}
+          {!loading && (rewardList.length === 0) && (
+            <div style={{ padding: '100px', textAlign: 'center' }}>No campaigns found, please add a campaign</div>
+          )}
         </GridContainer>
       </div>
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
@@ -132,9 +141,13 @@ export default function Rewards(props) {
               Initiate a Campaign for a Partner.
             </DialogContentText>
             <Formik
-              initialValues={initialValues}
-              validationSchema={ActionFormSchema}
-              isInitialValid={ActionFormSchema.isValidSync(initialValues)}>
+              initialValues={{
+                name: '',
+                description: '',
+                logoUrl: '',
+                actionId: '',
+                actionCount: ''
+              }}>
               {formData => (
                 <div>
                   <CustomInput
@@ -156,16 +169,41 @@ export default function Rewards(props) {
                     handleChange={formData.handleChange}
                   />
                   <CustomInput
-                    labelText="Assets"
-                    id="assets"
-                    name="assets"
+                    labelText="logoUrl"
+                    id="logoUrl"
+                    name="logoUrl"
+                    formControlProps={{
+                      fullWidth: true
+                    }}
+                    handleChange={formData.handleChange}
+                  />
+                  <FormControl className={classes.formControl}>
+                    <InputLabel id="demo-simple-select-label">Action List</InputLabel>
+                    <Select
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      name="actionId"
+                      value={formData.values.actionId}
+                      onChange={formData.handleChange}
+                    >
+                      {
+                        // actionList.map((item, key) => {
+                        //   return <MenuItem key={key} value={item.id}>{item.description}</MenuItem>;
+                        // })
+                      }
+                    </Select>
+                  </FormControl>
+                  <CustomInput
+                    labelText="Limit"
+                    id="actionCount"
+                    name="actionCount"
                     formControlProps={{
                       fullWidth: true
                     }}
                     handleChange={formData.handleChange}
                   />
                   <div style={{ marginTop: '20px' }}>
-                    <Button color="primary" disabled={!formData.isValid} onClick={() => addNewAction(formData.values)}>Add</Button>
+                    <Button color="primary" onClick={() => handleSubmit(formData.values)}>Create</Button>
                     <Button onClick={handleClose} color="primary">Cancel</Button>
                   </div>
                 </div>
@@ -174,6 +212,6 @@ export default function Rewards(props) {
           </DialogContent>
         </div>
       </Dialog>
-    </div>
+    </div >
   );
 }
