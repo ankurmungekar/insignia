@@ -76,12 +76,10 @@ export default function TableList() {
   };
   const initialValues = {
     brand: '',
-    partnerName: '',
     platform: '',
   }
   const ProgramFormSchema = Yup.object().shape({
     brand: Yup.string().required('Required'),
-    partnerName: Yup.string().required('Required'),
     platform: Yup.string().required('Required'),
   });
 
@@ -98,13 +96,13 @@ export default function TableList() {
   }, []);
   return (
     <div>
-      <div style={{ float: 'right' }}><Button color="primary" onClick={handleClickOpen}>Add new Program</Button></div>
+      <div style={{ float: 'right' }}><Button color="primary" onClick={handleClickOpen}>Add new Partner</Button></div>
       <div style={{ clear: 'both' }}>
         <GridContainer>
           <GridItem xs={12} sm={12} md={12}>
             <Card>
               <CardHeader color="primary">
-                <h4 className={classes.cardTitleWhite}>Loyalty Program</h4>
+                <h4 className={classes.cardTitleWhite}>Insignia Loyalty Partners</h4>
               </CardHeader>
               <CardBody>
                 {loading && (
@@ -123,11 +121,10 @@ export default function TableList() {
       </div>
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <div style={{ padding: '30px' }}>
-          <DialogTitle id="form-dialog-title">Add Program</DialogTitle>
+          <DialogTitle id="form-dialog-title">Add Partner</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              To subscribe to this website, please enter your email address here. We will send updates
-              occasionally.
+              Add new partner to the Insignia programme
             </DialogContentText>
             <Formik
               initialValues={initialValues}
@@ -147,7 +144,7 @@ export default function TableList() {
                   {formData.errors.brand && formData.touched.brand ? (
                     <div>{formData.errors.brand}</div>
                   ) : null}
-                  <CustomInput
+                  {/* <CustomInput
                     labelText="Partner Name"
                     id="partnerName"
                     name="partnerName"
@@ -158,7 +155,7 @@ export default function TableList() {
                   />
                   {formData.errors.partnerName && formData.touched.partnerName ? (
                     <div>{formData.errors.partnerName}</div>
-                  ) : null}
+                  ) : null} */}
                   <CustomInput
                     labelText="Platform"
                     id="platform"

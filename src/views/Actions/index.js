@@ -113,7 +113,7 @@ export default function TableList(props) {
                 )}
                 {!loading && actionList.length > 0 && (<ActionList
                   tableHeaderColor="primary"
-                  tableHead={["Specific Actions", "Points", "Tag"]}
+                  tableHead={["Specific Actions", "Points", "Action Tag"]}
                   tableData={actionList}
                 />)}
                 {!loading && (actionList.length === 0) && (
@@ -129,8 +129,7 @@ export default function TableList(props) {
           <DialogTitle id="form-dialog-title">Add Action</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              To subscribe to this website, please enter your email address here. We will send updates
-              occasionally.
+              Add Actions and specify points in order to earn rewards
             </DialogContentText>
             <Formik
               initialValues={initialValues}

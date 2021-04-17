@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from '../../axios.js';
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import Dialog from '@material-ui/core/Dialog';
@@ -22,6 +23,7 @@ import CardFooter from "components/Card/CardFooter.js";
 import Button from "components/CustomButtons/Button.js";
 import CustomInput from "components/CustomInput/CustomInput.js";
 import { Formik } from 'formik';
+import Spinner from '../../assets/img/fidget-spinner.gif';
 
 const styles = {
   cardCategoryWhite: {
@@ -54,68 +56,99 @@ const styles = {
 };
 
 const useStyles = makeStyles(styles);
-const tableData = [
-  { name: "Refer a friend", description: "Complete 4 more refferals to get the next level", iconUrl: "https://homepages.cae.wisc.edu/~ece533/images/airplane.png", points: '100' },
-  { name: "Growth", description: "Complete 4 more refferals to get the next level", iconUrl: "https://homepages.cae.wisc.edu/~ece533/images/airplane.png", points: '200' },
-  { name: "Achievement", description: "Complete 4 more refferals to get the next level", iconUrl: "https://homepages.cae.wisc.edu/~ece533/images/airplane.png", points: '150' },
-  { name: "Growth", description: "Complete 4 more refferals to get the next level", iconUrl: "https://homepages.cae.wisc.edu/~ece533/images/airplane.png", points: '300' }
-]
 
-export default function TableList() {
+export default function TableList(props) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
-  const [actionList, setActionList] = useState(tableData);
+  const [actionList, setActionList] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [badgesList, setBadgesList] = useState([]);
+  const partnerId = props.match.params.id;
   const handleClickOpen = () => {
+    axios.get(`/partner/${partnerId}/actions`)
+      .then(function (response) {
+        setActionList(response.data);
+        setLoading(false);
+      })
+      .catch(error => {
+        setLoading(false);
+        console.log(error);
+      })
     setOpen(true);
   };
   const handleClose = () => {
     setOpen(false);
   };
   const handleSubmit = (values) => {
-    const tempActionList = [...actionList, values]; // new array need to update
-    setActionList(tempActionList); // update the state
-    setOpen(false);
+    const params = { ...values, partnerId: partnerId };
+    axios.post('/badge', params)
+      .then(response => {
+        // const tempActionList = [...actionList, values]; // new array need to update
+        // setActionList(tempActionList); // update the state
+        setOpen(false);
+      })
+      .catch(error => {
+        console.log(error);
+      })
   };
+  useEffect(() => {
+    axios.get(`/partner/${partnerId}/badges`)
+      .then(function (response) {
+        setBadgesList(response.data);
+        setLoading(false);
+      })
+      .catch(error => {
+        setLoading(false);
+        console.log(error);
+      })
+    // eslint-disable-next-line
+  }, []);
   return (
     <div>
       <div style={{ float: 'right', marginBottom: '30px' }}><Button color="primary" onClick={handleClickOpen}>Create new Badge</Button></div>
       <div style={{ clear: 'both' }}>
         <GridContainer>
-          {actionList.map((item, key) => {
+          {loading && (
+            <div style={{ padding: '100px', textAlign: 'center' }}><img src={Spinner} /></div>
+          )}
+          {!loading && badgesList.map((item, key) => {
             return (
               <GridItem xs={12} sm={6} md={4} key={key}>
                 <Card style={{ marginTop: '0' }}>
                   <div style={{ padding: '40px 30px' }}>
                     <div style={{ width: '120px', height: '120px', borderRadius: '100%', float: 'left' }}>
-                      <img src={item.iconUrl} style={{ width: '100%', borderRadius: '100%' }} />
+                      <img src={item.logoUrl} style={{ width: '100%', borderRadius: '100%' }} />
                     </div>
                     <div style={{ margin: '0 0 0 140px' }}>
                       <h3 style={{ margin: '0 0 -5px 0', fontSize: '20px' }}>{item.name}</h3>
                       <p style={{ fontSize: '14px', lineHeight: '22px', color: '#545454' }}>{item.description}</p>
+                      <p style={{ fontSize: '14px', lineHeight: '22px', color: '#545454' }}><b>Action:</b> {item.actionDescription}</p>
+                      <p style={{ fontSize: '14px', lineHeight: '22px', color: '#545454' }}><b>Limit:</b> {item.needed}</p>
                     </div>
                   </div>
                 </Card>
               </GridItem>
             )
           })}
+          {!loading && (badgesList.length === 0) && (
+            <div style={{ padding: '100px', textAlign: 'center' }}>No badges found, please add some badges</div>
+          )}
         </GridContainer>
       </div>
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <div style={{ padding: '30px' }}>
-          <DialogTitle id="form-dialog-title">Creat a Badge</DialogTitle>
+          <DialogTitle id="form-dialog-title">Create a Badge</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              To subscribe to this website, please enter your email address here. We will send updates
-              occasionally.
+              Add a badge to unlock on achieving a milestone
             </DialogContentText>
             <Formik
               initialValues={{
                 name: '',
                 description: '',
-                iconUrl: 'https://homepages.cae.wisc.edu/~ece533/images/airplane.png',
-                points: '',
-                criteria: '',
-                category: ''
+                logoUrl: '',
+                actionId: '',
+                actionCount: ''
               }}>
               {formData => (
                 <div>
@@ -137,23 +170,35 @@ export default function TableList() {
                     }}
                     handleChange={formData.handleChange}
                   />
+                  <CustomInput
+                    labelText="logoUrl"
+                    id="logoUrl"
+                    name="logoUrl"
+                    formControlProps={{
+                      fullWidth: true
+                    }}
+                    handleChange={formData.handleChange}
+                  />
                   <FormControl className={classes.formControl}>
-                    <InputLabel id="demo-simple-select-label">Age</InputLabel>
+                    <InputLabel id="demo-simple-select-label">Action List</InputLabel>
                     <Select
                       labelId="demo-simple-select-label"
                       id="demo-simple-select"
-                      value={formData.values.category}
+                      name="actionId"
+                      value={formData.values.actionId}
                       onChange={formData.handleChange}
                     >
-                      <MenuItem value={10}>Ten</MenuItem>
-                      <MenuItem value={20}>Twenty</MenuItem>
-                      <MenuItem value={30}>Thirty</MenuItem>
+                      {
+                        actionList.map((item, key) => {
+                          return <MenuItem key={key} value={item.id}>{item.description}</MenuItem>;
+                        })
+                      }
                     </Select>
                   </FormControl>
                   <CustomInput
                     labelText="Limit"
-                    id="points"
-                    name="points"
+                    id="actionCount"
+                    name="actionCount"
                     formControlProps={{
                       fullWidth: true
                     }}
@@ -169,6 +214,6 @@ export default function TableList() {
           </DialogContent>
         </div>
       </Dialog>
-    </div>
+    </div >
   );
 }
