@@ -18,7 +18,7 @@ ReactDOM.render(
       <Route path="/admin" component={Admin} />
       <Route path="/project/:id/leaderboard" component={Project} />
       <Route path="/project/:id/actions" component={Project} />
-      <Route path="/project/:id/rewards" component={Project} />
+      <Route path="/project/:id/campaigns" component={Project} />
       <Route path="/project/:id/badges" component={Project} />
       <Route path="/project/:id/actions" component={Project} />
       <Route path="/rtl" component={RTL} />

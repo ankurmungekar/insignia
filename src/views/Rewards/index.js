@@ -99,13 +99,13 @@ export default function Rewards(props) {
   }, []);
   return (
     <div>
-      <div style={{ float: 'right' }}><Button color="primary" onClick={handleClickOpen}>Add new Reward</Button></div>
+      <div style={{ float: 'right' }}><Button color="primary" onClick={handleClickOpen}>Add New Campaign</Button></div>
       <div style={{ clear: 'both' }}>
         <GridContainer>
           <GridItem xs={12} sm={12} md={12}>
             <Card>
               <CardHeader color="primary">
-                <h4 className={classes.cardTitleWhite}>Actions</h4>
+                <h4 className={classes.cardTitleWhite}>Campaigns</h4>
               </CardHeader>
               <CardBody>
                 {loading && (
@@ -113,11 +113,11 @@ export default function Rewards(props) {
                 )}
                 {!loading && rewardList.length > 0 && (<RewardList
                   tableHeaderColor="primary"
-                  tableHead={["Specific Actions", "Points", "Tag"]}
+                  tableHead={["Specific Campaigns", "Points", "Tag"]}
                   tableData={rewardList}
                 />)}
                 {!loading && (rewardList.length === 0) && (
-                  <div style={{ padding: '100px', textAlign: 'center' }}>No rewards found, please add some rewards</div>
+                  <div style={{ padding: '100px', textAlign: 'center' }}>No campaigns found, please add a campaign</div>
                 )}
               </CardBody>
             </Card>
@@ -126,11 +126,10 @@ export default function Rewards(props) {
       </div>
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <div style={{ padding: '30px' }}>
-          <DialogTitle id="form-dialog-title">Add Reward</DialogTitle>
+          <DialogTitle id="form-dialog-title">Add Campaign</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              To subscribe to this website, please enter your email address here. We will send updates
-              occasionally.
+              Initiate a Campaign for a Partner.
             </DialogContentText>
             <Formik
               initialValues={initialValues}

@@ -49,8 +49,8 @@ const dashboardRoutes = [
     layout: "/project"
   },
   {
-    path: `/rewards`,
-    name: "Rewards",
+    path: `/campaigns`,
+    name: "Campaigns",
     icon: CardGiftcardIcon,
     component: Rewards,
     layout: "/project"
