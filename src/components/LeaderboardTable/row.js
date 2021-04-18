@@ -46,18 +46,23 @@ const styles = {
         fontSize: '20px',
     },
     points: {
-        fontWeight: '300',
+        fontWeight: '600',
         fontSize: '14px',
+        width: '10%',
     },
     level: {
         fontWeight: '600',
         fontSize: '14px',
-        width: '30%',
+        width: '15%',
     },
     badges: {
         fontWeight: '600',
         fontSize: '14px',
-        width: '10%',
+        width: '15%',
+    },
+    country: {
+        fontWeight: '300',
+        fontSize: '13px'
     }
 };
 
@@ -81,16 +86,21 @@ const Row = (props) => {
             <div className={classes.rank}>{props.rank}</div>
             <div className={classes.main}>
                 <div className={classes.name}>{rowData.firstName} {rowData.lastName}</div>
-                <div className={classes.points}>{rowData.country}</div>
-            </div>
-            <div className={classes.level}>
-                <div>Points</div>
-                {rowData.totalPoints}
+                <div className={classes.country}>{rowData.country}</div>
             </div>
             <div className={classes.badges}>
                 <div>Badges</div>
                 {/* {rowData.badges} */}
                 30
+            </div>
+            <div className={classes.level}>
+                <div>Levels</div>
+                {/* {rowData.badges} */}
+                10
+            </div>
+            <div className={classes.points}>
+                <div>Points</div>
+                {rowData.totalPoints}
             </div>
         </div>
     );

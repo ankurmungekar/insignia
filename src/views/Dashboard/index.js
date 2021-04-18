@@ -66,8 +66,10 @@ export default function TableList() {
     const params = values;
     axios.post('/program', params)
       .then(response => {
-        const tempProgramList = [...programList, values]; // new array need to update
-        setProgramList(tempProgramList); // update the state
+        values['id'] = response.data;
+        const tempProgramList = [...programList, values];
+        setProgramList(tempProgramList);
+        console.log(tempProgramList);
         setOpen(false);
       })
       .catch(error => {

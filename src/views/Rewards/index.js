@@ -95,10 +95,10 @@ const PurpleSwitch = withStyles({
   switchBase: {
     color: '#ccc',
     '&$checked': {
-      color: '#59b369',
+      color: '#2fb127',
     },
     '&$checked + $track': {
-      backgroundColor: '#59b369',
+      backgroundColor: '#2fb127',
     },
   },
   checked: {},
@@ -204,7 +204,7 @@ export default function TableList(props) {
   }
   return (
     <div>
-      <div style={{ float: 'left', marginBottom: '30px' }}><h1 className={classes.header} >Campaigns</h1></div>
+      <div style={{ float: 'left' }}><h1 className={classes.header} >Campaigns</h1></div>
       <div style={{ float: 'right', marginBottom: '30px' }}><Button color="primary" onClick={handleClickOpen}>Create new Campaign</Button></div>
       <div style={{ clear: 'both' }}>
         {loading && (
@@ -247,7 +247,7 @@ export default function TableList(props) {
             )
           })}
           {!loading && (campaignsList.length === 0) && (
-            <div style={{ padding: '100px', textAlign: 'center' }}>No campaigns found, please add a campaign</div>
+            <div style={{ padding: '100px', textAlign: 'center', width: '100%' }}>No campaigns found, please add a campaign</div>
           )}
         </GridContainer>
       </div>
@@ -285,7 +285,7 @@ export default function TableList(props) {
                     }}
                     handleChange={formData.handleChange}
                   />
-                  <FormControl className={classes.formControl}>
+                  <FormControl className={classes.formControl} style={{ width: "100%" }}>
                     <InputLabel id="demo-simple-select-label">Status</InputLabel>
                     <Select
                       labelId="demo-simple-select-label"

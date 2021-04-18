@@ -99,14 +99,14 @@ export default function TableList(props) {
   }, []);
   return (
     <div>
-      <div style={{ float: 'left', marginBottom: '30px' }}><h1 className={classes.header} >Actions</h1></div>
+      <div style={{ float: 'left' }}><h1 className={classes.header} >Actions</h1></div>
       <div style={{ float: 'right' }}><Button color="primary" onClick={handleClickOpen}>Add new Action</Button></div>
       <div style={{ clear: 'both' }}>
         <GridContainer>
           <GridItem xs={12} sm={12} md={12}>
             <Card>
               <CardHeader color="primary">
-                <h4 className={classes.cardTitleWhite}>Actions</h4>
+                <h4 className={classes.cardTitleWhite}>Actions vs Points</h4>
               </CardHeader>
               <CardBody>
                 {loading && (

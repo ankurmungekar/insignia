@@ -105,7 +105,7 @@ export default function TableList(props) {
   }, []);
   return (
     <div>
-      <div style={{ float: 'left', marginBottom: '30px' }}><h1 className={classes.header} >Badges</h1></div>
+      <div style={{ float: 'left' }}><h1 className={classes.header} >Badges</h1></div>
       <div style={{ float: 'right', marginBottom: '30px' }}><Button color="primary" onClick={handleClickOpen}>Create new Badge</Button></div>
       <div style={{ clear: 'both' }}>
 
@@ -133,7 +133,7 @@ export default function TableList(props) {
             )
           })}
           {!loading && (badgesList.length === 0) && (
-            <div style={{ padding: '100px', textAlign: 'center' }}>No badges found, please add some badges</div>
+            <div style={{ padding: '100px', textAlign: 'center', width: '100%' }}>No badges found, please add some badges</div>
           )}
         </GridContainer>
       </div>
@@ -181,7 +181,7 @@ export default function TableList(props) {
                     }}
                     handleChange={formData.handleChange}
                   />
-                  <FormControl className={classes.formControl}>
+                  <FormControl className={classes.formControl} style={{ width: "100%", marginTop: '20px' }}>
                     <InputLabel id="demo-simple-select-label">Action List</InputLabel>
                     <Select
                       labelId="demo-simple-select-label"

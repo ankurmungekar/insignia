@@ -45,7 +45,7 @@ export default function CustomTable(props) {
         <TableBody>
           {tableData.map((item, key) => {
             return (
-              <TableRow key={key} className={classes.tableBodyRow} onClick={(key) => TableRowHandler(item.id)} style={{ cursor: 'pointer' }}>
+              <TableRow key={key} className={classes.tableBodyRow} onClick={() => TableRowHandler(item.id)} style={{ cursor: 'pointer' }}>
                 {item.brand && (
                   <TableCell className={classes.tableCell}>
                     {item.brand}
