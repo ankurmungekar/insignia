@@ -70,8 +70,8 @@ export default function TableList(props) {
     setOpen(false);
   };
   const handleSubmit = (values) => {
-    const params = { ...values, partnerId: partnerId };
-    axios.post('/badge', params)
+    const params = { ...values };
+    axios.post(`/partners/${partnerId}/campaing`, params)
       .then(response => {
         // const tempActionList = [...actionList, values]; // new array need to update
         // setActionList(tempActionList); // update the state
@@ -95,12 +95,12 @@ export default function TableList(props) {
   }, []);
   return (
     <div>
-      <div style={{ float: 'right', marginBottom: '30px' }}><Button color="primary" onClick={handleClickOpen}>Create new Badge</Button></div>
+      <div style={{ float: 'right', marginBottom: '30px' }}><Button color="primary" onClick={handleClickOpen}>Create new Campaign</Button></div>
       <div style={{ clear: 'both' }}>
+        {loading && (
+          <div style={{ padding: '100px', textAlign: 'center' }}><img src={Spinner} /></div>
+        )}
         <GridContainer>
-          {loading && (
-            <div style={{ padding: '100px', textAlign: 'center' }}><img src={Spinner} /></div>
-          )}
           {!loading && rewardList.map((item, key) => {
             return (
               <GridItem xs={12} sm={6} md={4} key={key}>
@@ -144,9 +144,7 @@ export default function TableList(props) {
               initialValues={{
                 name: '',
                 description: '',
-                logoUrl: '',
-                actionId: '',
-                actionCount: ''
+                status: ''
               }}>
               {formData => (
                 <div>
@@ -168,40 +166,19 @@ export default function TableList(props) {
                     }}
                     handleChange={formData.handleChange}
                   />
-                  <CustomInput
-                    labelText="logoUrl"
-                    id="logoUrl"
-                    name="logoUrl"
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                    handleChange={formData.handleChange}
-                  />
                   <FormControl className={classes.formControl}>
-                    <InputLabel id="demo-simple-select-label">Action List</InputLabel>
+                    <InputLabel id="demo-simple-select-label">Status</InputLabel>
                     <Select
                       labelId="demo-simple-select-label"
                       id="demo-simple-select"
-                      name="actionId"
-                      value={formData.values.actionId}
+                      name="status"
+                      value={formData.values.status}
                       onChange={formData.handleChange}
                     >
-                      {
-                        // actionList.map((item, key) => {
-                        //   return <MenuItem key={key} value={item.id}>{item.description}</MenuItem>;
-                        // })
-                      }
+                      <MenuItem value="active">ACTIVE</MenuItem>;
+                      <MenuItem value="inactive">INACTIVE</MenuItem>;
                     </Select>
                   </FormControl>
-                  <CustomInput
-                    labelText="Limit"
-                    id="actionCount"
-                    name="actionCount"
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                    handleChange={formData.handleChange}
-                  />
                   <div style={{ marginTop: '20px' }}>
                     <Button color="primary" onClick={() => handleSubmit(formData.values)}>Create</Button>
                     <Button onClick={handleClose} color="primary">Cancel</Button>
