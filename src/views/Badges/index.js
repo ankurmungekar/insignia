@@ -181,7 +181,7 @@ export default function TableList(props) {
                     }}
                     handleChange={formData.handleChange}
                   />
-                  <FormControl className={classes.formControl}>
+                  <FormControl className={classes.formControl} style={{ width: "100%"}}>
                     <InputLabel id="demo-simple-select-label">Action List</InputLabel>
                     <Select
                       labelId="demo-simple-select-label"
