@@ -42,7 +42,9 @@ export default function Footer(props) {
         <p className={classes.center} align="center">
           <span>
             &copy; {1900 + new Date().getYear()}{" "}
-            <a
+            Powered By&nbsp;
+            <a 
+              style={{ color: '#EF7831' }}
               href="baseURL"
               target="_parent"
               className={classes.a}
