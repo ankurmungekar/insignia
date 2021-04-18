@@ -40,21 +40,15 @@ export default function CustomTable(props) {
           {tableData.map((item, key) => {
             return (
               <TableRow key={key} className={classes.tableBodyRow}>
-                {item.description && (
-                  <TableCell className={classes.tableCell}>
-                    {item.description}
-                  </TableCell>
-                )}
-                {item.point && (
-                  <TableCell className={classes.tableCell}>
-                    {item.point}
-                  </TableCell>
-                )}
-                {item.actionTag && (
-                  <TableCell className={classes.tableCell}>
-                    {item.actionTag}
-                  </TableCell>
-                )}
+                <TableCell className={classes.tableCell}>
+                  {item.description}
+                </TableCell>
+                <TableCell className={classes.tableCell}>
+                  {item.point}
+                </TableCell>
+                <TableCell className={classes.tableCell}>
+                  {item.actionTag}
+                </TableCell>
               </TableRow>
             );
           })}
