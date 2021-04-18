@@ -53,15 +53,6 @@ const useStyles = makeStyles(styles);
 
 export default function TableList(props) {
   const classes = useStyles();
-  const tableData = [
-    { name: "Thomas Crane", level: "9", points: "1200", badge: "43" },
-    { name: "Cierra Vega", level: "7", points: "1100", badge: "32" },
-    { name: "Alden Cantrell", level: "6", points: "980", badge: "32" },
-    { name: "Pierre Cox", level: "5", points: "700", badge: "23" },
-    { name: "Miranda Shaffer", level: "5", points: "650", badge: "20" },
-    { name: "Bradyn Kramer", level: "4", points: "650", badge: "13" },
-    { name: "Alvaro Mcgee", level: "1", points: "200", badge: "5" }
-  ]
   const [loading, setLoading] = useState(true);
   const [leaderList, setLeaderList] = useState([]);
   const partnerId = props.match.params.id;

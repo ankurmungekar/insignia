@@ -12,6 +12,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import Switch from '@material-ui/core/Switch';
 // core components
 import GridItem from "components/Grid/GridItem.js";
 import GridContainer from "components/Grid/GridContainer.js";
@@ -25,6 +26,31 @@ import CustomInput from "components/CustomInput/CustomInput.js";
 import { Formik } from 'formik';
 import Spinner from '../../assets/img/fidget-spinner.gif';
 
+const tableData = [
+  {
+    name: "December 2021", status: "inactive", description: 'campaign description', rewards: [{
+      name: 'Amazon voucher Worth Rs. 2000',
+      rank: 1
+    },
+    {
+      name: '50% Discount on Lenskart.com',
+      rank: 2
+    }]
+  },
+  {
+    name: "June 2021", status: "active", description: 'campaign description', rewards: [{
+      name: 'Amazon voucher Worth Rs. 2000',
+      rank: 1
+    },
+    {
+      name: '50% Discount on Lenskart.com',
+      rank: 2
+    }]
+  },
+  {
+    name: "July 2021", status: "inactive", description: 'campaign description', rewards: []
+  }
+]
 const styles = {
   cardCategoryWhite: {
     "&,& a,& a:hover,& a:focus": {
@@ -60,8 +86,9 @@ const useStyles = makeStyles(styles);
 export default function TableList(props) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
+  const [openRanks, setOpenRanks] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [rewardList, setRewardList] = useState([]);
+  const [campaignsList, setCampaignsList] = useState([]);
   const partnerId = props.match.params.id;
   const handleClickOpen = () => {
     setOpen(true);
@@ -69,22 +96,42 @@ export default function TableList(props) {
   const handleClose = () => {
     setOpen(false);
   };
+  const handleClickOpenRank = () => {
+    setOpenRanks(true);
+  };
+  const handleCloseRank = () => {
+    setOpenRanks(false);
+  };
+
   const handleSubmit = (values) => {
     const params = { ...values };
-    axios.post(`/partners/${partnerId}/campaing`, params)
+    axios.post(`/partner/${partnerId}/campaign`, params)
       .then(response => {
-        // const tempActionList = [...actionList, values]; // new array need to update
-        // setActionList(tempActionList); // update the state
+        const tempCamaignList = [...campaignsList, values];
+        setCampaignsList(tempCamaignList);
         setOpen(false);
       })
       .catch(error => {
         console.log(error);
       })
   };
+  const handleStatusChange = (e) => {
+    // const params = { ...values };
+    // axios.post(`/partners/${partnerId}/campaing`, params)
+    //   .then(response => {
+    //     // const tempActionList = [...actionList, values]; // new array need to update
+    //     // setActionList(tempActionList); // update the state
+    //     setOpen(false);
+    //   })
+    //   .catch(error => {
+    //     console.log(error);
+    //   })
+    console.log(e);
+  };
   useEffect(() => {
-    axios.get(`/partners/${partnerId}/campaigns`)
+    axios.get(`/partner/${partnerId}/campaigns`)
       .then(function (response) {
-        setRewardList(response.data);
+        setCampaignsList(response.data);
         setLoading(false);
       })
       .catch(error => {
@@ -93,6 +140,13 @@ export default function TableList(props) {
       })
     // eslint-disable-next-line
   }, []);
+  let rewardList = '';
+  const displayRewards = (rewards) => {
+    rewardList = (rewards.map((item, key) => {
+      return <li>{item.name}</li>
+    }))
+    return rewardList;
+  }
   return (
     <div>
       <div style={{ float: 'right', marginBottom: '30px' }}><Button color="primary" onClick={handleClickOpen}>Create new Campaign</Button></div>
@@ -101,34 +155,44 @@ export default function TableList(props) {
           <div style={{ padding: '100px', textAlign: 'center' }}><img src={Spinner} /></div>
         )}
         <GridContainer>
-          {!loading && rewardList.map((item, key) => {
+          {!loading && campaignsList.map((item, key) => {
             return (
-              <GridItem xs={12} sm={6} md={4} key={key}>
+              <GridItem xs={12} sm={12} md={12} key={key}>
                 <Card style={{ marginTop: '0' }}>
-                  <div style={{ padding: '40px 30px' }}>
+                  <div style={{ padding: '20px' }}>
                     <div>
-                      <div style={{ borderRadius: '100%', float: 'left', paddingTop: '20px' }}>
-                        {item.name}
+                      <div style={{ float: 'right' }}>
+                        <Switch
+                          checked={item.status === 'ACTIVE' ? true : false}
+                          onChange={(e) => handleStatusChange(e)}
+                          name="status"
+                          color="primary"
+                          inputProps={{ 'aria-label': 'primary checkbox' }}
+                        />
+                        <Button color="primary" onClick={handleClickOpenRank}>Add Rewards</Button>
                       </div>
-                      <Button style={{ float: 'right' }}> {item.status} </Button>
-                    </div>
-                    <div style={{ clear: 'both' }}>
+                      <h3 style={{ margin: '0px 0 -15px 0' }}>{item.name}</h3>
                       <p>{item.description}</p>
-                      <p style={{ margin: '0' }}>
-                        Top winners will get
-                      </p>
-                      <ol style={{ margin: '0' }}>
-                        <li>Amazon voucher</li>
-                        <li>Amazon voucher</li>
-                        <li>Amazon voucher</li>
-                      </ol>
+                    </div>
+                    <div>
+                      {(item.rewards && item.rewards.length > 0) && (
+                        <div>
+                          <div>Top winners will get:</div>
+                          <ol style={{ paddingLeft: '14px', margin: '0', color: '#f07830', fontWeight: 'bold' }}>
+                            {displayRewards(item.rewards)}
+                          </ol>
+                        </div>
+                      )}
+                      {(!item.rewards || item.rewards && item.rewards.length === 0) && (
+                        <div>No Rewards added to the campaign, Please add some Rewards</div>
+                      )}
                     </div>
                   </div>
                 </Card>
               </GridItem>
             )
           })}
-          {!loading && (rewardList.length === 0) && (
+          {!loading && (campaignsList.length === 0) && (
             <div style={{ padding: '100px', textAlign: 'center' }}>No campaigns found, please add a campaign</div>
           )}
         </GridContainer>
@@ -144,7 +208,8 @@ export default function TableList(props) {
               initialValues={{
                 name: '',
                 description: '',
-                status: ''
+                status: '',
+                rewards: []
               }}>
               {formData => (
                 <div>
@@ -179,6 +244,53 @@ export default function TableList(props) {
                       <MenuItem value="inactive">INACTIVE</MenuItem>;
                     </Select>
                   </FormControl>
+                  <div style={{ marginTop: '20px' }}>
+                    <Button color="primary" onClick={() => handleSubmit(formData.values)}>Create</Button>
+                    <Button onClick={handleClose} color="primary">Cancel</Button>
+                  </div>
+                </div>
+              )}
+            </Formik>
+          </DialogContent>
+        </div>
+      </Dialog>
+      <Dialog open={openRanks} onClose={handleCloseRank} aria-labelledby="form-dialog-title">
+        <div style={{ padding: '30px' }}>
+          <DialogTitle id="form-dialog-title">Add Rewards</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              Add rewrds to the campaign
+            </DialogContentText>
+            <Formik
+              initialValues={{
+                name: '',
+                description: '',
+                status: ''
+              }}>
+              {formData => (
+                <div>
+                  <div>
+                    <CustomInput
+                      labelText="Name"
+                      id="name"
+                      name="name"
+                      formControlProps={{
+                        fullWidth: true
+                      }}
+                      handleChange={formData.handleChange}
+                      style={{ margin: '0' }}
+                    />
+                    <CustomInput
+                      labelText="Rank"
+                      id="rank"
+                      name="rank"
+                      formControlProps={{
+                        fullWidth: true
+                      }}
+                      handleChange={formData.handleChange}
+                      style={{ margin: '0' }}
+                    />
+                  </div>
                   <div style={{ marginTop: '20px' }}>
                     <Button color="primary" onClick={() => handleSubmit(formData.values)}>Create</Button>
                     <Button onClick={handleClose} color="primary">Cancel</Button>
