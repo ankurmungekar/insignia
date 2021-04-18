@@ -39,9 +39,9 @@ export default function Header(props) {
       <Toolbar className={classes.container}>
         <div className={classes.flex}>
           {/* Here we create navbar brand, based on route name */}
-          <h3><b>
+          <h3 style={{ textAlign: 'center' }}><b>
             {makeBrand()}
-            </b></h3>
+          </b></h3>
         </div>
         <Hidden smDown implementation="css">
           {props.rtlActive ? <RTLNavbarLinks /> : <AdminNavbarLinks />}

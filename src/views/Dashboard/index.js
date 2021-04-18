@@ -77,6 +77,7 @@ export default function TableList() {
   const initialValues = {
     brand: '',
     platform: '',
+    partnerName: ''
   }
   const ProgramFormSchema = Yup.object().shape({
     brand: Yup.string().required('Required'),
