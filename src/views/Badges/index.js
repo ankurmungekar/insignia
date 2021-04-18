@@ -104,17 +104,17 @@ export default function TableList(props) {
     // eslint-disable-next-line
   }, []);
   return (
-    <div>      
+    <div>
       <div style={{ float: 'left', marginBottom: '30px' }}><h1 className={classes.header} >Badges</h1></div>
       <div style={{ float: 'right', marginBottom: '30px' }}><Button color="primary" onClick={handleClickOpen}>Create new Badge</Button></div>
       <div style={{ clear: 'both' }}>
-      
+
         {loading && (
-            <div style={{ padding: '100px', textAlign: 'center' }}><img src={Spinner} /></div>
-          )}
+          <div style={{ padding: '100px', textAlign: 'center' }}><img src={Spinner} /></div>
+        )}
         <GridContainer>
           {!loading && badgesList.map((item, key) => {
-            return (            
+            return (
               <GridItem xs={12} sm={6} md={4} key={key}>
                 <Card style={{ marginTop: '0' }}>
                   <div style={{ padding: '40px 30px' }}>

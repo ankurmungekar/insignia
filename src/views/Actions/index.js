@@ -99,6 +99,7 @@ export default function TableList(props) {
   }, []);
   return (
     <div>
+      <div style={{ float: 'left', marginBottom: '30px' }}><h1 className={classes.header} >Actions</h1></div>
       <div style={{ float: 'right' }}><Button color="primary" onClick={handleClickOpen}>Add new Action</Button></div>
       <div style={{ clear: 'both' }}>
         <GridContainer>
