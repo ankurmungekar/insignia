@@ -105,7 +105,7 @@ export default function TableList(props) {
   }, []);
   return (
     <div>      
-      <div style={{ float: 'left', marginBottom: '30px' }}><h1 className={classes.header} >Badges</h1></div>
+      <div style={{ float: 'left'}}><h1 className={classes.header} >Badges</h1></div>
       <div style={{ float: 'right', marginBottom: '30px' }}><Button color="primary" onClick={handleClickOpen}>Create new Badge</Button></div>
       <div style={{ clear: 'both' }}>
       

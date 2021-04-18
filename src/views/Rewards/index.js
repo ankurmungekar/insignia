@@ -149,6 +149,7 @@ export default function TableList(props) {
   }
   return (
     <div>
+      <div style={{ float: 'left'}}><h1 className={classes.header} >Campaigns</h1></div>
       <div style={{ float: 'right', marginBottom: '30px' }}><Button color="primary" onClick={handleClickOpen}>Create new Campaign</Button></div>
       <div style={{ clear: 'both' }}>
         {loading && (
@@ -184,7 +185,7 @@ export default function TableList(props) {
                         </div>
                       )}
                       {(!item.rewards || item.rewards && item.rewards.length === 0) && (
-                        <div>No Rewards added to the campaign, Please add some Rewards</div>
+                        <div>No Rewards added to the Campaign, please add some Rewards</div>
                       )}
                     </div>
                   </div>
@@ -259,7 +260,7 @@ export default function TableList(props) {
           <DialogTitle id="form-dialog-title">Add Rewards</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              Add rewrds to the campaign
+              Add rewards to the campaign
             </DialogContentText>
             <Formik
               initialValues={{
