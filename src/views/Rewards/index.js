@@ -141,6 +141,7 @@ export default function TableList(props) {
     const params = { ...values };
     axios.post(`/partner/${partnerId}/campaign`, params)
       .then(response => {
+        values.campaignId = response.data;
         const tempCamaignList = [...campaignsList, values];
         setCampaignsList(tempCamaignList);
         setOpen(false);
