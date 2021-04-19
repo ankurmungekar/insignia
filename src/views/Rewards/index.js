@@ -160,15 +160,6 @@ export default function TableList(props) {
       })
   };
   const handleStatusChange = (e, id) => {
-    // const objIndex = campaignsList.findIndex(obj => obj.id === id);
-    // const updatedObj = { ...campaignsList[objIndex], status: e.target.checked };
-    // console.log(updatedObj);
-    // const updatedCampaignsList = [
-    //   ...campaignsList.slice(0, objIndex),
-    //   updatedObj,
-    //   ...campaignsList.slice(objIndex + 1),
-    // ];
-    // //setCampaignsList(updatedCampaignsList);
     let status = e.target.checked ? 'active' : 'inactive'
     const updatedCampaignsList = campaignsList.map(obj =>
       obj.campaignId === id ? { ...obj, status: status } : obj
@@ -285,7 +276,7 @@ export default function TableList(props) {
                     }}
                     handleChange={formData.handleChange}
                   />
-                  <FormControl className={classes.formControl} style={{ width: "100%" }}>
+                  <FormControl className={classes.formControl} style={{ width: "100%", marginTop: '35px' }}>
                     <InputLabel id="demo-simple-select-label">Status</InputLabel>
                     <Select
                       labelId="demo-simple-select-label"
