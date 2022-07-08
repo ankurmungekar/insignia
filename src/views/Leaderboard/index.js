@@ -65,7 +65,7 @@ const useStyles = makeStyles(styles);
 // ]
 export default function TableList(props) {
   const classes = useStyles();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [leaderList, setLeaderList] = useState([]);
   const partnerId = props.match.params.id;
   useEffect(() => {

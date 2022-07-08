@@ -126,7 +126,7 @@ export default function TableList(props) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [openRanks, setOpenRanks] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [campaignsList, setCampaignsList] = useState([]);
   const [campaignId, setCampaignId] = useState('');
   const partnerId = props.match.params.id;
