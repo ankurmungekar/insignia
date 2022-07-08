@@ -20,7 +20,7 @@ ReactDOM.render(
       <Route path="/project/:id/actions" component={Project} />
       <Route path="/project/:id/campaigns" component={Project} />
       <Route path="/project/:id/badges" component={Project} />
-      <Route path="/project/:id/actions" component={Project} />
+      <Route path="/project/:id/products" component={Project} />
       <Route path="/rtl" component={RTL} />
       <Redirect from="/" to="/admin/dashboard" />
     </Switch>

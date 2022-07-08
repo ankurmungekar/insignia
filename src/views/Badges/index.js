@@ -23,7 +23,7 @@ import CardFooter from "components/Card/CardFooter.js";
 import Button from "components/CustomButtons/Button.js";
 import CustomInput from "components/CustomInput/CustomInput.js";
 import { Formik } from 'formik';
-import Spinner from '../../assets/img/fidget-spinner.gif';
+import Spinner from '../../assets/img/rhombus.gif';
 
 const styles = {
   cardCategoryWhite: {
@@ -52,6 +52,10 @@ const styles = {
       fontWeight: "400",
       lineHeight: "1"
     }
+  },
+  header: {
+    margin: "0 0 80px",
+    lineHeight: "40px"
   }
 };
 
@@ -110,7 +114,7 @@ export default function TableList(props) {
       <div style={{ clear: 'both' }}>
 
         {loading && (
-          <div style={{ padding: '100px', textAlign: 'center' }}><img src={Spinner} /></div>
+          <div style={{ padding: '100px', textAlign: 'center' }}><img style={{ mixBlendMode: 'color-burn' }} src={Spinner} /></div>
         )}
         <GridContainer>
           {!loading && badgesList.map((item, key) => {

@@ -10,7 +10,7 @@ import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
 import Leaderboard from "components/LeaderboardTable";
-import Spinner from '../../assets/img/fidget-spinner.gif';
+import Spinner from '../../assets/img/rhombus.gif';
 
 const styles = {
   cardCategoryWhite: {
@@ -45,16 +45,26 @@ const styles = {
     paddingRight: '50px',
   },
   header: {
-    padding: '0 15px'
+    padding: '0',
+    margin: "0 0 80px",
+    lineHeight: "40px"
   }
 };
 
 const useStyles = makeStyles(styles);
-
+const tableData = [
+  { firstName: "Thomas Crane", level: "9", totalPoints: "1200", badge: "43", country: 'India' },
+  { firstName: "Cierra Vega", level: "7", totalPoints: "1100", badge: "32", country: 'USA' },
+  { firstName: "Alden Cantrell", level: "6", totalPoints: "980", badge: "32", country: 'UK' },
+  { firstName: "Pierre Cox", level: "5", totalPoints: "700", badge: "23", country: 'Australia' },
+  { firstName: "Miranda Shaffer", level: "5", totalPoints: "650", badge: "20", country: 'India' },
+  { firstName: "Bradyn Kramer", level: "4", totalPoints: "650", badge: "13", country: 'China' },
+  { firstName: "Alvaro Mcgee", level: "1", totalPoints: "200", badge: "5", country: 'Russia' }
+]
 export default function TableList(props) {
   const classes = useStyles();
-  const [loading, setLoading] = useState(true);
-  const [leaderList, setLeaderList] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [leaderList, setLeaderList] = useState(tableData);
   const partnerId = props.match.params.id;
   useEffect(() => {
     axios.get(`/partner/${partnerId}/leaderboard`)
@@ -72,7 +82,7 @@ export default function TableList(props) {
       <h1 className={classes.header}>Leaderboard</h1>
       <GridItem xs={12} sm={12} md={12}>
         {loading && (
-          <div style={{ padding: '100px', textAlign: 'center' }}><img src={Spinner} /></div>
+          <div style={{ padding: '100px', textAlign: 'center' }}><img style={{ mixBlendMode: 'color-burn' }} src={Spinner} /></div>
         )}
         {!loading && leaderList.length > 0 && (
           <Leaderboard

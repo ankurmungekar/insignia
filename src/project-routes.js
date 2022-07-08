@@ -25,6 +25,7 @@ import Leaderboard from "views/Leaderboard/";
 import Actions from "views/Actions/";
 import Rewards from "views/Rewards/";
 import Badges from "views/Badges";
+import Products from "views/Products/";
 
 const dashboardRoutes = [
   {
@@ -53,6 +54,13 @@ const dashboardRoutes = [
     name: "Campaigns",
     icon: CardGiftcardIcon,
     component: Rewards,
+    layout: "/project"
+  },
+  {
+    path: `/products`,
+    name: "Products",
+    icon: CardGiftcardIcon,
+    component: Products,
     layout: "/project"
   }
 ];

@@ -24,7 +24,7 @@ import CardFooter from "components/Card/CardFooter.js";
 import Button from "components/CustomButtons/Button.js";
 import CustomInput from "components/CustomInput/CustomInput.js";
 import { Formik, Form, FieldArray } from 'formik';
-import Spinner from '../../assets/img/fidget-spinner.gif';
+import Spinner from '../../assets/img/rhombus.gif';
 
 let rewardObj = {
   name: '',
@@ -34,31 +34,44 @@ let rewardObj = {
 const initialValues = {
   rewards: [rewardObj]
 };
-// const tableData = [
-//   {
-//     name: "December 2021", status: "inactive", description: 'campaign description', rewards: [{
-//       name: 'Amazon voucher Worth Rs. 2000',
-//       rank: 1
-//     },
-//     {
-//       name: '50% Discount on Lenskart.com',
-//       rank: 2
-//     }]
-//   },
-//   {
-//     name: "June 2021", status: "active", description: 'campaign description', rewards: [{
-//       name: 'Amazon voucher Worth Rs. 2000',
-//       rank: 1
-//     },
-//     {
-//       name: '50% Discount on Lenskart.com',
-//       rank: 2
-//     }]
-//   },
-//   {
-//     name: "July 2021", status: "inactive", description: 'campaign description', rewards: []
-//   }
-// ]
+const tableData = [
+  {
+    name: "April 2022 - Monthly Leaderboard",
+    status: "active",
+    description: 'Meastro of the month',
+    rewardList: [{
+      name: 'Early Access to Meastro features',
+      rank: 1
+    },
+    {
+      name: 'Exclusive Access to Partner Events and Network',
+      rank: 2
+    },
+    {
+      name: '50% Off on Next Hosting Purchase',
+      rank: 2
+    }]
+  },
+  {
+    name: "December 2021",
+    status: "active",
+    description: 'Best time to start planning your Christmas marketing campaign.',
+    rewardList: [{
+      name: 'Amazon voucher Worth Rs. 2000',
+      rank: 1
+    },
+    {
+      name: '50% Discount on Lenskart.com',
+      rank: 2
+    }]
+  },
+  {
+    name: "July 2021", status:
+      "inactive",
+    description: 'campaign description',
+    rewardList: []
+  }
+]
 const styles = {
   cardCategoryWhite: {
     "&,& a,& a:hover,& a:focus": {
@@ -86,6 +99,10 @@ const styles = {
       fontWeight: "400",
       lineHeight: "1"
     }
+  },
+  header: {
+    margin: "0 0 80px",
+    lineHeight: "40px"
   }
 };
 
@@ -109,8 +126,8 @@ export default function TableList(props) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [openRanks, setOpenRanks] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const [campaignsList, setCampaignsList] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [campaignsList, setCampaignsList] = useState(tableData);
   const [campaignId, setCampaignId] = useState('');
   const partnerId = props.match.params.id;
   const handleClickOpen = () => {
@@ -175,18 +192,18 @@ export default function TableList(props) {
         console.log(error);
       })
   };
-  useEffect(() => {
-    axios.get(`/partner/${partnerId}/campaigns`)
-      .then(function (response) {
-        setCampaignsList(response.data);
-        setLoading(false);
-      })
-      .catch(error => {
-        setLoading(false);
-        console.log(error);
-      })
-    // eslint-disable-next-line
-  }, []);
+  // useEffect(() => {
+  //   axios.get(`/partner/${partnerId}/campaigns`)
+  //     .then(function (response) {
+  //       setCampaignsList(response.data);
+  //       setLoading(false);
+  //     })
+  //     .catch(error => {
+  //       setLoading(false);
+  //       console.log(error);
+  //     })
+  //   // eslint-disable-next-line
+  // }, []);
   let rewardList = '';
   const displayRewards = (rewards) => {
     rewardList = (rewards.map((item, key) => {
@@ -200,7 +217,7 @@ export default function TableList(props) {
       <div style={{ float: 'right', marginBottom: '30px' }}><Button color="primary" onClick={handleClickOpen}>Create new Campaign</Button></div>
       <div style={{ clear: 'both' }}>
         {loading && (
-          <div style={{ padding: '100px', textAlign: 'center' }}><img src={Spinner} /></div>
+          <div style={{ padding: '100px', textAlign: 'center' }}><img style={{ mixBlendMode: 'color-burn' }} src={Spinner} /></div>
         )}
         <GridContainer>
           {!loading && campaignsList.map((item, key) => {

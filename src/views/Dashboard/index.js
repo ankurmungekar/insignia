@@ -17,7 +17,7 @@ import Button from "components/CustomButtons/Button.js";
 import CustomInput from "components/CustomInput/CustomInput.js";
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import Spinner from '../../assets/img/fidget-spinner.gif';
+import Spinner from '../../assets/img/rhombus.gif';
 
 const styles = {
   cardCategoryWhite: {
@@ -109,7 +109,7 @@ export default function TableList() {
               </CardHeader>
               <CardBody>
                 {loading && (
-                  <div style={{ padding: '100px', textAlign: 'center' }}><img src={Spinner} /></div>
+                  <div style={{ padding: '100px', textAlign: 'center' }}><img style={{ mixBlendMode: 'color-burn' }} src={Spinner} /></div>
                 )}
                 {!loading && (<ProgramList
                   tableHeaderColor="primary"
