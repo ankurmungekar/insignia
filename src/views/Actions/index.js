@@ -92,7 +92,8 @@ export default function TableList(props) {
   useEffect(() => {
     axios.get(`/partner/${partnerId}/actions`)
       .then(function (response) {
-        setActionList(response.data);
+        const data = response.data.sort((a, b) => parseFloat(b.point) - parseFloat(a.point));
+        setActionList(data);
         setLoading(false);
       })
       .catch(error => {

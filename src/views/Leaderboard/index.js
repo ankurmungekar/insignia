@@ -52,19 +52,19 @@ const styles = {
 };
 
 const useStyles = makeStyles(styles);
-const tableData = [
-  { firstName: "Thomas Crane", level: "9", totalPoints: "1200", badge: "43", country: 'India' },
-  { firstName: "Cierra Vega", level: "7", totalPoints: "1100", badge: "32", country: 'USA' },
-  { firstName: "Alden Cantrell", level: "6", totalPoints: "980", badge: "32", country: 'UK' },
-  { firstName: "Pierre Cox", level: "5", totalPoints: "700", badge: "23", country: 'Australia' },
-  { firstName: "Miranda Shaffer", level: "5", totalPoints: "650", badge: "20", country: 'India' },
-  { firstName: "Bradyn Kramer", level: "4", totalPoints: "650", badge: "13", country: 'China' },
-  { firstName: "Alvaro Mcgee", level: "1", totalPoints: "200", badge: "5", country: 'Russia' }
-]
+// const tableData = [
+//   { firstName: "Siddhant Wadhwani", level: "9", totalPoints: "1200", badge: "43", country: 'India' },
+//   { firstName: "Abhishek Kaushik", level: "7", totalPoints: "1100", badge: "32", country: 'United Kingdom' },
+//   { firstName: "Rejin Jayasankar", level: "6", totalPoints: "980", badge: "32", country: 'Autralia' },
+//   { firstName: "Ankur Mungekar", level: "5", totalPoints: "700", badge: "23", country: 'India' },
+//   { firstName: "Miranda Shaffer", level: "5", totalPoints: "650", badge: "20", country: 'India' },
+//   { firstName: "Bradyn Kramer", level: "4", totalPoints: "650", badge: "13", country: 'China' },
+//   { firstName: "Alvaro Mcgee", level: "1", totalPoints: "200", badge: "5", country: 'Russia' }
+// ]
 export default function TableList(props) {
   const classes = useStyles();
   const [loading, setLoading] = useState(false);
-  const [leaderList, setLeaderList] = useState(tableData);
+  const [leaderList, setLeaderList] = useState([]);
   const partnerId = props.match.params.id;
   useEffect(() => {
     axios.get(`/partner/${partnerId}/leaderboard`)
