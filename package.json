@@ -23,6 +23,7 @@
     "react-google-maps": "9.4.5",
     "react-router-dom": "5.2.0",
     "react-scripts": "3.4.1",
+    "react-share": "^4.4.0",
     "react-swipeable-views": "0.13.9",
     "typescript": "3.9.3",
     "yup": "^0.32.9"

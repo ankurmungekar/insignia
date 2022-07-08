@@ -11,6 +11,8 @@ import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
 import Leaderboard from "components/LeaderboardTable";
 import Spinner from '../../assets/img/rhombus.gif';
+import { FacebookShareButton, TwitterShareButton, LinkedinShareButton } from "react-share";
+import { FacebookIcon, TwitterIcon, LinkedinIcon } from "react-share";
 
 const styles = {
   cardCategoryWhite: {
@@ -79,19 +81,46 @@ export default function TableList(props) {
   }, []);
   return (
     <div className={classes.container}>
-      <h1 className={classes.header}>Leaderboard</h1>
-      <GridItem xs={12} sm={12} md={12}>
-        {loading && (
-          <div style={{ padding: '100px', textAlign: 'center' }}><img style={{ mixBlendMode: 'color-burn' }} src={Spinner} /></div>
-        )}
-        {!loading && leaderList.length > 0 && (
-          <Leaderboard
-            tableData={leaderList}
-          />)}
-        {!loading && (leaderList.length === 0) && (
-          <div style={{ padding: '100px', textAlign: 'center' }}>No data found</div>
-        )}
-      </GridItem>
+      <div style={{ float: 'left', marginLeft: "20px" }}><h1 className={classes.header}>Leaderboard</h1></div>
+      <div style={{ float: 'right', marginRight: "20px" }}>
+        <span style={{ display: 'inline-block', verticalAlign: 'top', marginRight: "10px", marginTop: '5px' }}>Share on Social Media:</span>
+        <FacebookShareButton
+          url={"https://maestro.bluehost.com/"}
+          quote={"Meastro Loyalty Leaders"}
+          hashtag={"#hashtag"}
+          description={"Meastro "}
+        >
+          <FacebookIcon size={32} round />
+        </FacebookShareButton> &nbsp;
+        <TwitterShareButton
+          title={"Meastro Loyalty Leaders"}
+          url={"https://maestro.bluehost.com/"}
+          hashtags={["hashtag1", "hashtag2"]}
+        >
+          <TwitterIcon size={32} round />
+        </TwitterShareButton> &nbsp;
+        <LinkedinShareButton
+          title={"Meastro Loyalty Leaders"}
+          summary={"Meastro Loyalty Leaders"}
+          hashtags={["hashtag1", "hashtag2"]}
+        >
+          <LinkedinIcon size={32} round />
+        </LinkedinShareButton>
+      </div>
+      <div style={{ clear: 'both' }}>
+        <GridItem xs={12} sm={12} md={12}>
+          {loading && (
+            <div style={{ padding: '100px', textAlign: 'center' }}><img style={{ mixBlendMode: 'color-burn' }} src={Spinner} /></div>
+          )}
+          {!loading && leaderList.length > 0 && (
+            <Leaderboard
+              tableData={leaderList}
+            />)}
+          {!loading && (leaderList.length === 0) && (
+            <div style={{ padding: '100px', textAlign: 'center' }}>No data found</div>
+          )}
+        </GridItem>
+      </div>
     </div>
   );
 }
