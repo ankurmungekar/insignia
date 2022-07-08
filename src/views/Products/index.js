@@ -102,6 +102,9 @@ export default function TableList(props) {
   const [loading, setLoading] = useState(false);
   const [actionList, setActionList] = useState(data);
   const partnerId = props.match.params.id;
+  const [editProduct, setEditProduct] = useState(false);
+  const [deleteProduct, setDeleteProduct] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(false);
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -140,6 +143,17 @@ export default function TableList(props) {
     "name": "string",
     "price": 0
   }
+
+
+  const openEditProduct = (product) => {
+    setSelectedProduct(product);
+    setEditProduct(true);
+  }
+
+  const openDeleteProduct = (product) => {
+    setSelectedProduct(product);
+    setDeleteProduct(true);
+  }
   // useEffect(() => {
   //   axios.get(`/partner/${partnerId}/actions`)
   //     .then(function (response) {
@@ -172,6 +186,8 @@ export default function TableList(props) {
                   tableHeaderColor="primary"
                   tableHead={["", "Title", "Description", "Points", "", ""]}
                   tableData={actionList}
+                  openEditProduct={openEditProduct}
+                  openDeleteProduct={openDeleteProduct}
                 />)}
                 {!loading && (actionList.length === 0) && (
                   <div style={{ padding: '100px', textAlign: 'center' }}>No actions found, please add some actions</div>
@@ -224,6 +240,77 @@ export default function TableList(props) {
                   <div style={{ marginTop: '20px' }}>
                     <Button color="primary" disabled={!formData.isValid} onClick={() => addNewAction(formData.values)}>Add</Button>
                     <Button onClick={handleClose} color="primary">Cancel</Button>
+                  </div>
+                </div>
+              )}
+            </Formik>
+          </DialogContent>
+        </div>
+      </Dialog>
+      <Dialog open={editProduct} onClose={() => setEditProduct(false)} aria-labelledby="form-dialog-title">
+        <div style={{ padding: '30px' }}>
+          <DialogTitle id="form-dialog-title">Edit - {selectedProduct.title}</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              Edit Product and specify price
+            </DialogContentText>
+            <Formik
+              initialValues={initialValues}
+              validationSchema={ActionFormSchema}
+              isInitialValid={ActionFormSchema.isValidSync(initialValues)}>
+              {formData => (
+                <div>
+                  <CustomInput
+                    labelText={selectedProduct.title}
+                    id="name"
+                    name="name"
+                    formControlProps={{
+                      fullWidth: true
+                    }}
+                    handleChange={formData.handleChange}
+                  />
+                  <CustomInput
+                    labelText={selectedProduct.description}
+                    id="description"
+                    name="description"
+                    formControlProps={{
+                      fullWidth: true
+                    }}
+                    handleChange={formData.handleChange}
+                  />
+                  <CustomInput
+                    labelText={selectedProduct.price}
+                    id="actionTag"
+                    name="actionTag"
+                    formControlProps={{
+                      fullWidth: true
+                    }}
+                    handleChange={formData.handleChange}
+                  />
+                  <div style={{ marginTop: '20px' }}>
+                    <Button color="primary" disabled={!formData.isValid} onClick={() => addNewAction(formData.values)}>Update</Button>
+                    <Button onClick={() => setEditProduct(false)} color="primary">Cancel</Button>
+                  </div>
+                </div>
+              )}
+            </Formik>
+          </DialogContent>
+        </div>
+      </Dialog>
+      <Dialog open={deleteProduct} onClose={() => setDeleteProduct(false)} aria-labelledby="form-dialog-title">
+        <div style={{ padding: '30px' }}>
+          <DialogTitle id="form-dialog-title">Delete Product</DialogTitle>
+          <DialogContent>
+            <Formik
+              initialValues={initialValues}
+              validationSchema={ActionFormSchema}
+              isInitialValid={ActionFormSchema.isValidSync(initialValues)}>
+              {formData => (
+                <div>
+                  <div style={{ fontSize: '20px' }}>Are you sure you want to delete <strong>{selectedProduct.title}</strong>?</div>
+                  <div style={{ marginTop: '20px' }}>
+                    <Button color="danger" disabled={!formData.isValid} onClick={() => addNewAction(formData.values)}>Delete</Button>
+                    <Button onClick={() => setDeleteProduct(false)} color="primary">Cancel</Button>
                   </div>
                 </div>
               )}

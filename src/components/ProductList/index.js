@@ -53,10 +53,10 @@ export default function CustomTable(props) {
                   <div style={{ padding: '0 20px' }}><strong>{item.price}</strong></div>
                 </TableCell>
                 <TableCell className={classes.tableCell}>
-                  <Button color="primary">Edit</Button>
+                  <Button color="primary" onClick={() => props.openEditProduct(item)}>Edit</Button>
                 </TableCell>
                 <TableCell className={classes.tableCell}>
-                  <Button color="danger">Remove</Button>
+                  <Button color="danger" onClick={() => props.openDeleteProduct(item)}>Remove</Button>
                 </TableCell>
               </TableRow>
             );
