@@ -62,32 +62,35 @@ const data = [
   {
     "id": 1,
     "title": "T-Shirts",
-    "price": "Rs.1999",
-    "description": "Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday", "category": "men's clothing",
+    "price": "1999",
+    "description": "Collection of exclusive, customized Meastro T-shirts",
+    "category": "men's clothing",
     "image": "https://i.ibb.co/YkD5rJV/tshirt1.png",
     "rating": { "rate": 3.9, "count": 120 }
   },
   {
     "id": 2,
     "title": "Bags",
-    "price": "Rs.1999",
-    "description": "Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday", "category": "men's clothing",
+    "price": "2499",
+    "description": "Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday",
+    "category": "men's clothing",
     "image": "https://i.ibb.co/0Qk1PD0/bag2.png",
     "rating": { "rate": 3.9, "count": 120 }
   },
   {
     "id": 3,
     "title": "Bottles",
-    "price": "Rs.1999",
-    "description": "Slim-fitting style, contrast raglan long sleeve, three-button henley placket, light weight & soft fabric for breathable and comfortable wearing. And Solid stitched shirts with round neck made for durability and a great fit for casual fashion wear and diehard baseball fans. The Henley style round neckline includes a three-button placket.", "category": "men's clothing",
+    "price": "999",
+    "description": "This double wall stainless steel bottle will keep your drinks cold throughout those warm summer days. 16.9oz. Height: 9.125 in.", "category": "men's clothing",
     "image": "https://i.ibb.co/51DN3jj/bottle1.png",
     "rating": { "rate": 4.1, "count": 259 }
   },
   {
     "id": 4,
     "title": "Mugs",
-    "price": "Rs.1999",
-    "description": "great outerwear jackets for Spring/Autumn/Winter, suitable for many occasions, such as working, hiking, camping, mountain/rock climbing, cycling, traveling or other outdoors. Good gift choice for you or your family member. A warm hearted love to Father, husband or son in this thanksgiving or Christmas Day.", "category": "men's clothing",
+    "price": "599",
+    "description": "Meastro Merchandise Printed Beautiful Mug for Home, Office, Kitchen Black Ceramic Coffee Mug.",
+    "category": "men's clothing",
     "image": "https://i.ibb.co/dmwB2FP/mug1.png",
     "rating": { "rate": 4.7, "count": 500 }
   }]
@@ -167,7 +170,7 @@ export default function TableList(props) {
                 )}
                 {!loading && actionList.length > 0 && (<ProductList
                   tableHeaderColor="primary"
-                  tableHead={["", "Title", "Description", "Price", "", ""]}
+                  tableHead={["", "Title", "Description", "Points", "", ""]}
                   tableData={actionList}
                 />)}
                 {!loading && (actionList.length === 0) && (

@@ -29,7 +29,7 @@ export default function CustomTable(props) {
                     className={classes.tableCell + " " + classes.tableHeadCell}
                     key={key}
                   >
-                    <div style={{ padding: '0 20px' }}>{prop}</div>
+                    <div style={{ padding: '0 20px' }}><strong>{prop}</strong></div>
                   </TableCell>
                 );
               })}
